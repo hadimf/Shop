@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Shop.enums;
 using Shop.Models;
 using Shop.Services;
+using System.Text.Json;
 
 namespace Shop
 {
@@ -24,6 +25,8 @@ namespace Shop
 
             } while (request != Request.ShowItems);
         }
+
+        // Check Request of User
         private static void CheckRequest(Request request)
         {
             switch (request)
@@ -57,31 +60,36 @@ namespace Shop
                     ConsoleHelper.FillPropertiesMessage();
                     ConsoleHelper.AskPropertyItems(properties, itemModel.Properties);
 
-                    // ??? Ticked!
+                    // Add Items to Dictionary
                     AddItemsToDictionary(itemModel, nameCategoryItem);
                     break;
                 case Request.ShowItems:
+                    // Ask Name of Category
                     string categoryName = ConsoleHelper.AskNameCategory();
+                    // Show Items
                     List<ItemModel> items = itemService.GetItems(categoryName);
                     ConsoleHelper.ShowItems(items);
                     break;
             }
         }
 
+        // Ask From User Add more Properties or No
         private static void AddPropertiesToCategory(CategoryModel categoryModel)
         {
             bool addMore;
-            List<string> propertiestlist = new List<string>();
+            List<string> propertiesList = new List<string>();
             do
             {   string property = ConsoleHelper.AskPropertyCategory();
-                propertiestlist.Add(property);
+                propertiesList.Add(property);
 
                 Answer answer = ConsoleHelper.AddMore();
                 addMore = answer == Answer.Yes ? true : false;
 
             } while (addMore);
-            categoryModel.Properties = propertiestlist;
+            categoryModel.Properties = propertiesList;
         }
+
+        // Get Properties Of Category
         private static List<string> GetPropertyOfCategory(List<CategoryModel> categories, string nameCategory)
         {
             List<string> properties = new List<string>();
@@ -94,6 +102,8 @@ namespace Shop
             }
             return properties;
         }
+
+        // Add Items to Dictionary
         private static void AddItemsToDictionary(ItemModel itemModel, string nameCategory)
         {
 

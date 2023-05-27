@@ -84,7 +84,7 @@ namespace Shop
         }
         public static void ShowItems(List<ItemModel> items)
         {
-
+            Console.Clear();
             foreach (var item in items)
             {
                 Console.WriteLine("Name : " + item.Name);

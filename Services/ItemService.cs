@@ -6,16 +6,19 @@ namespace Shop.Services
 {
     public class ItemService
     {
-        private List<ItemModel> Items = new List<ItemModel>();
         public Dictionary<string, List<ItemModel>> ListOfItems = new Dictionary<string, List<ItemModel>>();
-        public void AddToItemsList(ItemModel itemModel)
-        {
-            Items.Add(itemModel);
-        }
+
         public List<ItemModel> GetItems(string categoryName)
         {
+            if (!ListOfItems.ContainsKey(categoryName))
+            {
+                ListOfItems[categoryName] = new List<ItemModel>();
+                Console.WriteLine("There is nothing");
+                return ListOfItems[categoryName];
+
+            }
             return ListOfItems[categoryName];
-            
+
         }
     }
 }
